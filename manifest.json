@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Roblox Profile Reporter",
+    "version": "1.0",
+    "description": "Add a report-with-label button to Roblox profiles.",
+    "permissions": ["storage"],
+    "host_permissions": ["https://your-api.com/*", "https://www.roblox.com/*"],
+    "content_scripts": [
+        {
+            "matches": ["https://www.roblox.com/users/*/profile"],
+            "css": ["styles.css"],
+            "js": ["contentScript.js"]
+        }
+    ]
+}
