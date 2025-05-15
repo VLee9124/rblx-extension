@@ -1,63 +1,81 @@
+API_URL = 'https://bnhcsabaaagprnsbiqaj.supabase.co/rest/v1/reports'
 ;(async function extension() {
     // 1) Extract userId from URL
     const match = location.pathname.match(/^\/users\/(\d+)\/profile/)
     if (!match) return
     const userId = match[1]
 
-    // 2) Create the UI container
+    // create container
     const container = document.createElement('div')
     container.id = 'rbx-report-container'
+    container.className =
+        'fixed flex top-4 right-4 bg-white shadow-lg rounded-2xl p-4 space-y-3 w-64 z-50'
     container.innerHTML = `
-    <label for="rbx-labels">Report user:</label>
-    <select id="rbx-labels">
-      <option value="">-- choose a reason --</option>
-      <option value="Inappropriate Avatar">Cheating</option>
-      <option value="Inappropriate Name">Abusive</option>
-      <option value="Spam">Spam</option>
-      <option value="Other">Other</option>
-    </select>
-    <button id="rbx-submit">Submit Report</button>
-    <div id="rbx-msg" style="margin-top:6px;font-size:0.9em;color:green;"></div>
+    <label class="block text-sm font-medium text-gray-700 underline">
+      Report user:
+    </label>
+    <div id="rbx-labels" class="space-y-2">
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="Cheating" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Cheating</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="Abusive" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Abusive</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="Spam" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Spam</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" value="Other" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Other</span>
+      </label>
+    </div>
+    <button id="rbx-submit" class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+      Submit Report
+    </button>
+    <div id="rbx-msg" class="text-sm"></div>
   `
     document.body.appendChild(container)
 
     // 3) Handle submit
+
     document
         .getElementById('rbx-submit')
         .addEventListener('click', async () => {
-            const select = document.getElementById('rbx-labels')
-            const label = select.value
             const msgEl = document.getElementById('rbx-msg')
             msgEl.textContent = ''
 
-            if (!label) {
+            const checked = Array.from(
+                container.querySelectorAll('input[type="checkbox"]:checked')
+            ).map((el) => el.value)
+
+            if (checked.length === 0) {
                 msgEl.style.color = 'red'
-                msgEl.textContent = 'Please select a reason.'
+                msgEl.textContent = 'Please select at least one label.'
                 return
             }
 
-            // 4) POST to your backend
-            try {
-                const res = await fetch(
-                    'https://bnhcsabaaagprnsbiqaj.supabase.co/rest/v1/reports',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJuaGNzYWJhYWFncHJuc2JpcWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxNjIyMzMsImV4cCI6MjA2MjczODIzM30.GV1f-VxyAbGIteM2ZfDPAFGFRTsa7m6A73Yus6BhZCA',
-                            // Authorization: 'Bearer YOUR_ANON_KEY',
-                        },
-                        body: JSON.stringify({ user_id: userId, label }),
-                    }
-                )
+            const label = checked.join(', ')
 
-                if (!res.ok) throw new Error(`HTTP ${res.status}`)
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJuaGNzYWJhYWFncHJuc2JpcWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxNjIyMzMsImV4cCI6MjA2MjczODIzM30.GV1f-VxyAbGIteM2ZfDPAFGFRTsa7m6A73Yus6BhZCA',
+                        // Authorization: 'Bearer YOUR_ANON_KEY',
+                    },
+                    body: JSON.stringify({ user_id: userId, label }),
+                })
+                if (!response.ok) throw new Error(`HTTP ${response.status}`)
                 msgEl.style.color = 'green'
-                msgEl.textContent = 'Report submitted!'
-            } catch (err) {
+                msgEl.textContent = 'Report submitted successfully!'
+            } catch (error) {
                 msgEl.style.color = 'red'
-                msgEl.textContent = 'Submission failed.'
-                console.error('Report error:', err)
+                msgEl.textContent = 'Submission failed. Please try again.'
+                console.error('Error:', error)
             }
         })
 })()
