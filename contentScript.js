@@ -14,20 +14,16 @@ API_URL = 'https://bnhcsabaaagprnsbiqaj.supabase.co/rest/v1/reports'
     </label>
     <div id="rbx-labels" class="space-y-2 flex flex-col">
       <label class="inline-flex items-center">
-        <input type="checkbox" value="Cheating" class="form-checkbox text-indigo-600" />
-        <span class="ml-2 text-gray-700">Cheating</span>
+        <input type="checkbox" value="Offensive" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Offensive Avatar</span>
       </label>
       <label class="inline-flex items-center">
-        <input type="checkbox" value="Abusive" class="form-checkbox text-indigo-600" />
-        <span class="ml-2 text-gray-700">Abusive</span>
+        <input type="checkbox" value="Sexual" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Sexual Avatar</span>
       </label>
       <label class="inline-flex items-center">
-        <input type="checkbox" value="Spam" class="form-checkbox text-indigo-600" />
-        <span class="ml-2 text-gray-700">Spam</span>
-      </label>
-      <label class="inline-flex items-center">
-        <input type="checkbox" value="Other" class="form-checkbox text-indigo-600" />
-        <span class="ml-2 text-gray-700">Other</span>
+        <input type="checkbox" value="Violent" class="form-checkbox text-indigo-600" />
+        <span class="ml-2 text-gray-700">Violent Avatar</span>
       </label>
     </div>
     <button id="rbx-submit" class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
