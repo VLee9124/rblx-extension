@@ -9,7 +9,7 @@ API_URL = 'https://bnhcsabaaagprnsbiqaj.supabase.co/rest/v1/reports'
     container.className = 'flex flex-col space-x-2'
     container.innerHTML = `
     <div id="rbx-msg" class="text-sm"></div>
-    <button id="rbx-submit" class="MuiButtonBase-root MuiButton-root web-blox-css-tss-ixzjnb-Typography-buttonMedium MuiButton-contained web-blox-css-tss-81xyys-Button-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root web-blox-css-tss-ixzjnb-Typography-buttonMedium MuiButton-contained web-blox-css-tss-81xyys-Button-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium web-blox-css-mui-9xm3sd-Typography-button">
+    <button id="rbx-submit" class="MuiButtonBase-root MuiButton-root web-blox-css-tss-1aszub1-Typography-buttonMedium MuiButton-outlined web-blox-css-tss-rfowt4-Button-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root web-blox-css-tss-1aszub1-Typography-buttonMedium MuiButton-outlined web-blox-css-tss-rfowt4-Button-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium web-blox-css-mui-1xhf9yt-Typography-button">
       Submit Report
     </button>
     `
@@ -18,6 +18,7 @@ API_URL = 'https://bnhcsabaaagprnsbiqaj.supabase.co/rest/v1/reports'
         'profile-header-buttons'
     )[0]
     headerBtns.insertAdjacentElement('afterbegin', container)
+
     document
         .getElementById('rbx-submit')
         .addEventListener('click', async () => {
